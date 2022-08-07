@@ -21,14 +21,14 @@ import asyncio
 
 async def get_response():
     async with ClientSession() as session:
-        responce = await session.get(
+        response = await session.get(
             url="https://developerhub.alfabank.by:8273/partner/1.0.1/public/rates"
         )
         await asyncio.sleep(3)
         print(response.status)
 async def main():
     loop = asyncio.get_running_loop()
-    task = [loop.create_task(get_responce()) for i in range(10)]
+    tasks = [loop.create_task(get_response()) for i in range(10)]
     for task in tasks:
         await task
 asyncio.run(main())
