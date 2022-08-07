@@ -31,4 +31,5 @@ async def main():
     tasks = [loop.create_task(get_response()) for i in range(10)]
     for task in tasks:
         await task
+asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 asyncio.run(main())
