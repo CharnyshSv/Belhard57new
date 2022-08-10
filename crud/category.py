@@ -15,17 +15,17 @@ class CRUDCategory(object):
         category = Category(**category.dict())
         session.add(category)
         try:
-            session.commit()
+            await session.commit()
         except IntegrityError:
             pass
         else:
-            session.refresh(category)
+            await session.refresh(category)
             return CategoryInDBSchema(**category.__dict__)
 
     @staticmethod
     @create_async_session
     async def get(category_id: int, session: AsyncSession = None) -> Optional[CategoryInDBSchema]:
-        category = session.execute(
+        category = await session.execute(
           select(Category).where(Category.id == category_id)
         )
         category = category.first()
@@ -36,13 +36,13 @@ class CRUDCategory(object):
     @create_async_session
     async def get_all(parent_id: int = None, session: AsyncSession = None) -> list[CategoryInDBSchema]:
         if parent_id:
-            categories = session.execute(
+            categories = await session.execute(
                 select(Category)
                 .where(Category.parent_id == parent_id)
                 .order_by(Category.id)
             )
         else:
-            categories = session.execute(
+            categories = await session.execute(
                 select(Category)
             )
         return [CategoryInDBSchema(**category[0].__dict__) for category in categories]
@@ -50,11 +50,11 @@ class CRUDCategory(object):
     @staticmethod
     @create_async_session
     async def delete(category_id: int, session: AsyncSession = None) -> None:
-        categories = session.execute(
+        categories = await session.execute(
             delete(Category)
                 .where(Category.id == category_id)
         )
-        session.commit()
+        await session.commit()
 
     @staticmethod
     @create_async_session
@@ -62,13 +62,13 @@ class CRUDCategory(object):
             category: CategoryInDBSchema,
             session: AsyncSession = None
     ) -> bool:
-        session.execute(
+        await session.execute(
             update(Category)
             .where(Category.id == category.id)
             .values(**category.dict())
         )
         try:
-            session.commit()
+            await session.commit()
         except IntegrityError:
             return False
         else:
@@ -77,7 +77,7 @@ class CRUDCategory(object):
     @staticmethod
     @create_async_session
     async def get_articles(category_id: int, session: AsyncSession = None) -> list[tuple[Category,Article]]:
-        response = session.execute(
+        response = await session.execute(
             select(Category, Article)
             .join(Article. Category.id == Article.category_id)
             .where(Category.id == category_id)
