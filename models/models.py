@@ -43,6 +43,6 @@ class ArticleComment(Base):
     __tablename__: str = "articles_comments"
 
     id = Column(Integer, primary_key=True)
-    article_id = Column(Integer, ForeignKey("article.id", ondelete="CASCADE"), nullable=False)
+    article_id = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"), nullable=False)
     comment = Column(VARCHAR(140), nullable=False)
     date_create = Column(TIMESTAMP, default=datetime.utcnow())
