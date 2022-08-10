@@ -36,13 +36,13 @@ class Article(Base):
     title = Column(VARCHAR(50), nullable=False)
     body = Column(VARCHAR(1024), nullable=False)
     date_created = Column(TIMESTAMP, default=datetime.utcnow())
-    author_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE", nullable=False))
+    author_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
 
 
 class ArticleComment(Base):
     __tablename__: str = "articles_comments"
 
-    id = Column(Integer, ForeignKey("user.id", ondelate="CASCADE"), nullable=False)
-    article_id = Column(Integer, ForeignKey("article.id", ondelate="CASCADE"), nullable=False)
+    id = Column(Integer, primary_key=True)
+    article_id = Column(Integer, ForeignKey("article.id", ondelete="CASCADE"), nullable=False)
     comment = Column(VARCHAR(140), nullable=False)
     date_create = Column(TIMESTAMP, default=datetime.utcnow())
