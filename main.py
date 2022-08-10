@@ -22,7 +22,7 @@ import asyncio
 
 
 async def main():
-    res = await CRUDCategory.add
+    res = await CRUDCategory.add(name='Напитки', parent_id=1)
     print(res)
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 asyncio.run(main())
