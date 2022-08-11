@@ -7,7 +7,7 @@ class ArticleSchema(BaseModel):
     title = str: Field(max_length=24)
     body = str: Field(max_length=1024)
     date_created = time: Field(default = datetime.utcnow())
-    author_id = int = Field(ge=1, default=None)
+    author_id = int: Field(ge=1, default=None)
 
 
 class ArticleInDBSchema(ArticleSchema):
