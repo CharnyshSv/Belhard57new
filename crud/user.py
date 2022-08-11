@@ -3,6 +3,7 @@ from typing import Optional
 from sqlalchemy import select, update, delete, or_, and_
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+#from sqlalchemy.orm import session
 
 from models import create_async_session, Category, Article, User
 from schemas import UserInDBSchema, UserSchema
@@ -34,24 +35,16 @@ class CRUDUser(object):
 
     @staticmethod
     @create_async_session
-    async def get_all(session: AsyncSession = None) -> list[UserInDBSchema]:
-        response = await session.execute(
-            select.all(User).where(User.id < 10).limit(5)
-        )
-        return response.all()
-
-    @staticmethod
-    @create_async_session
     async def delete(user_id: int, session: AsyncSession = None) -> None:
-        users = await session.execute(
+        await session.execute(
             delete(User)
             .where(User.id == user_id)
         )
         await session.commit()
 
-
-@create_async_session
-async def update(
+    @staticmethod
+    @create_async_session
+    async def update(
         user_id: int,
         user: UserInDBSchema,
         session: AsyncSession = None,
@@ -67,3 +60,13 @@ async def update(
         return False
     else:
         return True
+
+    @staticmethod
+    @create_async_session
+    async def get_all(session: AsyncSession = None) -> list[UserInDBSchema]:
+        users = await session.execute(
+            select(User)
+        )
+#       return users.all()
+#       return [user[0] for user in users]
+        return [UserInDBSchema(**user[0].__dict__) for user in users]
