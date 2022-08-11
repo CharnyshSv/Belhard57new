@@ -59,12 +59,13 @@ class CRUDCategory(object):
     @staticmethod
     @create_async_session
     async def update(
+            category_id: int,
             category: CategoryInDBSchema,
             session: AsyncSession = None
     ) -> bool:
         await session.execute(
             update(Category)
-            .where(Category.id == category.id)
+            .where(Category.id == category_id)
             .values(**category.dict())
         )
         try:
