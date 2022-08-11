@@ -49,17 +49,17 @@ class CRUDUser(object):
         user: UserInDBSchema,
         session: AsyncSession = None,
         ) -> bool:
-    await session.execute(
-        update(User)
-        .where(User.id == user_id)
-        .values(**user.dict())
-    )
-    try:
-        await session.commit()
-    except IntegrityError:
-        return False
-    else:
-        return True
+            await session.execute(
+                update(User)
+                .where(User.id == user_id)
+                .values(**user.dict())
+            )
+            try:
+                await session.commit()
+            except IntegrityError:
+                return False
+            else:
+                return True
 
     @staticmethod
     @create_async_session
@@ -69,4 +69,4 @@ class CRUDUser(object):
         )
 #       return users.all()
 #       return [user[0] for user in users]
-        return [UserInDBSchema(**user[0].__dict__) for user in users]
+            return [UserInDBSchema(**user[0].__dict__) for user in users]
