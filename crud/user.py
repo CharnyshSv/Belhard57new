@@ -69,4 +69,4 @@ class CRUDUser(object):
         )
 #       return users.all()
 #       return [user[0] for user in users]
-            return [UserInDBSchema(**user[0].__dict__) for user in users]
+        return [UserInDBSchema(**user[0].__dict__) for user in users]

@@ -44,5 +44,5 @@ class ArticleComment(Base):
 
     id = Column(Integer, primary_key=True)
     article_id = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"), nullable=False)
-      = Column(VARCHAR(140), nullable=False)
+    comment = Column(VARCHAR(140), nullable=False)
     date_create = Column(TIMESTAMP, default=datetime.utcnow())

@@ -9,6 +9,7 @@ from schemas import CategoryInDBSchema, CategorySchema
 
 class CRUDCategory(object):
 
+
     @staticmethod
     @create_async_session
     async def add(category: CategorySchema, session: AsyncSession = None) -> Optional[CategoryInDBSchema]:
