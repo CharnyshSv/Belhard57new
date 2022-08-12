@@ -1,4 +1,4 @@
-from crud import CRUDCategory
+from crud import CRUDCategory, category
 from crud import CRUDUser
 from crud import CRUDArticle
 from crud import CRUDArticleComment
@@ -23,13 +23,15 @@ from crud import CRUDArticleComment
 # asyncio.run(main())
 import asyncio
 
-#async def main():
-#    res = await CRUDCategory.add(name="food", parent_id=1)
-#    print(res)
-
 async def main():
-    res = await CRUDUser.add(user_name="Ivan", hashed_password="password", email="test1@test.com")
+    category.name = 'Спорт'
+    category.parent_id = None
+    res = await CRUDCategory.add()
     print(res)
+
+#async def main():
+#    res = await CRUDUser.add(user_name="Ivan", hashed_password="password", email="test1@test.com")
+#    print(res)
 
 
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())

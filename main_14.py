@@ -26,6 +26,8 @@ async def get_response():
         )
         await asyncio.sleep(3)
         print(response.status)
+
+
 async def main():
     loop = asyncio.get_running_loop()
     tasks = [loop.create_task(get_response()) for i in range(10)]
