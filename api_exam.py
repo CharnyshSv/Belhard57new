@@ -1,21 +1,23 @@
-from aiohttp import ClientSession
 import asyncio
-
-async def put_response():
-    async with ClientSession() as session:
-        response = await session.put(
-            url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/add"
-        )
-        await asyncio.sleep(3)
-        print(response.status)
+from aiohttp import ClientSession
+from schemas import ArticleInDBSchema
 
 
-async def main():
-    loop = asyncio.put_running_loop()
-    tasks = [loop.create_task(put_response()) for i in range(10)]
-    for task in tasks:
-        await task
+class NewArticle(object):
 
+    @staticmethod
+    async def put_article():
+        async with ClientSession() as session:
+            response = await session.put(
+                url="https://d474-80-93-191-82.eu.ngrok.io//api/1/article/add",
+                json={
+                    "title": "string",
+                    "body": "string",
+                    "category_id": 1,
+                    "user_id": 1
+                }
+            )
+            print(await response.json())
 
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-asyncio.run(main())
+asyncio.run(NewArticle.put_article())
